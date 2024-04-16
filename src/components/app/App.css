@@ -1,0 +1,13 @@
+.form-body {
+  padding: 20px;
+  width: 800px;
+  border-radius: 10px;
+  border: 1px solid #2d2c2c;
+  margin-bottom: 30px;
+}
+.form-title {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 15px;
+  margin-bottom: 30px;
+}

@@ -1,0 +1,72 @@
+html,
+body {
+  height: 100%;
+  scroll-behavior: smooth;
+  color: #1c1a1a;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #3f3e3e;
+}
+
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  position: relative;
+  z-index: 10;
+  margin-bottom: 30px;
+}
+
+.container {
+  max-width: 1080px;
+  padding: 0 15px;
+  margin: 50px auto;
+  margin-bottom: 30px;
+}
+a,
+a:visited,
+a:hover {
+  text-decoration: none;
+}
+a {
+  color: inherit;
+}
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol,
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+input,
+button,
+textarea,
+select {
+  font-family: inherit;
+}
+input {
+  font-family: inherit;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}

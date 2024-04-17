@@ -1,46 +1,40 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy } from "react";
+import { Routes, Route } from "react-router-dom";
 
-import SearchBox from "../search_box/SearchBox";
-import ContactForm from "../contact_form/ContactForm";
-import ContactList from "../contact_list/ContactList";
-import data from "../../data.json";
+import { Loader } from "../loader/Loader";
+import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import Navigation from "../navigation/Navigation";
+
+const MovieCast = lazy(() => import("../movie_cast/MovieCast"));
+const MovieReviews = lazy(() => import("../movie_reviews/MovieReviews"));
+
+const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+const MoviesPage = lazy(() => import("../../pages/MoviesPage/MoviesPage"));
+const MovieDetailsPage = lazy(() =>
+  import("../../pages/MovieDetailsPage/MovieDetailsPage")
+);
 
 import "./App.css";
 
 const App = () => {
-  const [contacts, setContact] = useState(() => {
-    const savedContacts = window.localStorage.getItem("contacts");
-    return savedContacts ? JSON.parse(savedContacts) : data;
-  });
-
-  const [finder, setFinder] = useState("");
-
-  useEffect(() => {
-    localStorage.setItem("contacts", JSON.stringify(contacts));
-  }, [contacts]);
-
-  const addContact = (newContact) => {
-    setContact((prevContacts) => {
-      return [...prevContacts, newContact];
-    });
-  };
-
-  const filteredContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(finder.toLowerCase())
-  );
-
-  const deleteContact = (contactId) => {
-    setContact((prevContacts) => {
-      return prevContacts.filter((contact) => contact.id !== contactId);
-    });
-  };
-
   return (
-    <div className="wrapper container form-body">
-      <h1 className="form-title">Phonebook</h1>
-      <ContactForm onAdd={addContact} />
-      <SearchBox value={finder} onFind={setFinder} />
-      <ContactList contacts={filteredContacts} onDelete={deleteContact} />
+    <div className="wrapper">
+      <Navigation />
+      <main className="main">
+        <div className="container">
+          <Suspense fallback={<Loader />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/movies" element={<MoviesPage />} />
+              <Route path="/movies/:id" element={<MovieDetailsPage />}>
+                <Route path="cast" element={<MovieCast />} />
+                <Route path="reviews" element={<MovieReviews />} />
+              </Route>
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </main>
     </div>
   );
 };

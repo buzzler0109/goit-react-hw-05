@@ -12,7 +12,6 @@ import css from "./MoviesPage.module.scss";
 const MoviesPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [movieSearch, setMovieSearch] = useState([]);
-  const [notFound, setNotFound] = useState(false);
   const [loader, setLoader] = useState(false);
 
   const moviesName = searchParams.get("query") ?? "";
@@ -21,14 +20,11 @@ const MoviesPage = () => {
     async function fetchResponse() {
       try {
         setLoader(true);
-        setNotFound(false);
         const res = await fetchMoviesSearch(moviesName);
         const dataResults = res.data.results;
-        if (moviesName && !(dataResults.length > 0)) return setNotFound(true);
         setMovieSearch(dataResults);
       } catch (error) {
         console.log(error);
-        setNotFound(true);
       } finally {
         setLoader(false);
       }
@@ -40,8 +36,7 @@ const MoviesPage = () => {
     <section className={css.movies}>
       {loader && <Loader />}
       <FormSubmit setSearchParams={setSearchParams} />
-      <MovieList movieResults={movieSearch} />
-      {notFound && <div className={css.found}></div>}
+      <MovieList movies={movieSearch} />
     </section>
   );
 };

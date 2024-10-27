@@ -1,0 +1,15 @@
+.wrapp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.link {
+  margin-top: 20px;
+  font-size: 20px;
+  padding: 10px 15px;
+  background-color: #43484e;
+  transition: 150ms all;
+  &:hover {
+    background-color: #5f828d;
+  }
+}

@@ -5,13 +5,11 @@ import { fetchMoviesCredits } from "../../api/movies";
 import CastItem from "./cast_item/CastItem";
 import { Loader } from "../loader/Loader";
 
-import { TbFaceIdError } from "react-icons/tb";
-import css from "";
+import css from "./MovieCast.module.scss";
 
 const MovieCast = () => {
   const { id } = useParams();
   const [movieCast, setMovieCast] = useState([]);
-  const [notFound, setNotFound] = useState(false);
   const [loader, setLoader] = useState(false);
 
   useEffect(() => {
@@ -19,14 +17,11 @@ const MovieCast = () => {
     async function fetchResponse() {
       try {
         setLoader(true);
-        setNotFound(false);
         const res = await fetchMoviesCredits(id);
         const dataResults = res.data;
-        if (!(dataResults.cast.length > 0)) return setNotFound(true);
         setMovieCast(dataResults);
       } catch (error) {
         console.log(error);
-        setNotFound(true);
       } finally {
         setLoader(false);
       }
@@ -45,11 +40,6 @@ const MovieCast = () => {
             <CastItem key={item.id} item={item} />
           ))}
         </ul>
-      )}
-      {notFound && (
-        <div className={css.found}>
-          <TbFaceIdError />
-        </div>
       )}
     </div>
   );
